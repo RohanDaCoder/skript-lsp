@@ -1,5 +1,5 @@
 {
-    "name": "intelliskript-client",
+    "name": "@intelliskript/client",
     "version": "0.0.1",
     "description": "VSCode part of a language server in a web extension",
     "license": "MIT",

@@ -1,6 +1,6 @@
 import { PatternData } from "../../Pattern/data/pattern-data";
 import { PatternType } from "../../Pattern/pattern-type";
-import { Scope } from "../../Pattern/scope";
+import { Scope } from "../../Pattern/Scope";
 import { SkriptPatternCall } from "../../Pattern/skript-pattern";
 import { TokenTypes } from "../../token-types";
 import { SkriptTypeState } from "../storage/type/skript-type-state";

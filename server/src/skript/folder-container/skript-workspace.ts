@@ -1,7 +1,7 @@
 import { TextDocument } from "vscode-languageserver-textdocument";
 import { URI } from "vscode-uri";
-import { Scope } from "../../Pattern/scope";
-import Mutex from "../../thread";
+import { Scope } from "../../Pattern/Scope";
+import Mutex from "../../Thread";
 import { SkriptFile } from "../section/skript-file";
 import { SkriptFolder } from "./skript-folder";
 import { SkriptFolderContainer } from "./skript-foldercontainer";

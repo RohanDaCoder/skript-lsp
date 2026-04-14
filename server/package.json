@@ -1,5 +1,5 @@
 {
-    "name": "lsp-web-extension-sample-server",
+    "name": "@intelliskript/server",
     "version": "1.0.0",
     "description": "Example implementation of a language server in a web extension.",
     "license": "MIT",

@@ -1,5 +1,5 @@
 import { PatternData } from "../../Pattern/data/pattern-data";
-import { Scope } from "../../Pattern/scope";
+import { Scope } from "../../Pattern/Scope";
 import { SkriptContext } from "../validation/skript-context";
 import { ReflectEventSection } from "./reflect/reflect-event-section";
 import { SkriptSection } from "./skript-section/skript-section";

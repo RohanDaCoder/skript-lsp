@@ -2,43 +2,19 @@
     "name": "intelliskript",
     "displayName": "IntelliSkript",
     "version": "1.7.30",
-    "description": "IntelliSense for skript",
-    "categories": [
-        "Formatters",
-        "Linters",
-        "Programming Languages",
-        "Snippets",
-        "Themes"
-    ],
-    "keywords": [
-        "format",
-        "intellisense",
-        "intelliskript",
-        "skript",
-        "theme",
-        "web"
-    ],
-    "license": "GNU",
-    "author": "John Heikens",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/JohnHeikens/IntelliSkript"
-    },
-    "publisher": "JohnHeikens",
-    "main": "./client/dist/nodeClientMain.js",
-    "browser": "./client/dist/browserClientMain.js",
+    "private": true,
+    "workspaces": ["client", "server"],
     "scripts": {
         "vscode:prepublish": "bun run build",
         "build": "bun run build:client && bun run build:server",
-        "build:client": "esbuild client/src/nodeClientMain.ts --bundle --platform=node --outfile=client/dist/nodeClientMain.js --external:vscode --external:@vscode/extension-telemetry && esbuild client/src/browserClientMain.ts --bundle --platform=browser --outfile=client/dist/browserClientMain.js --external:vscode --external:@vscode/extension-telemetry",
-        "build:server": "esbuild server/src/nodeServerMain.ts --bundle --platform=node --outfile=server/dist/nodeServerMain.js --external:vscode && esbuild server/src/browserServerMain.ts --bundle --platform=browser --outfile=server/dist/browserServerMain.js --external:vscode",
+        "build:client": "bun x esbuild client/src/nodeClientMain.ts --bundle --platform=node --outfile=client/dist/nodeClientMain.js --external:vscode --external:@vscode/extension-telemetry && bun x esbuild client/src/browserClientMain.ts --bundle --platform=browser --outfile=client/dist/browserClientMain.js --external:vscode --external:@vscode/extension-telemetry",
+        "build:server": "bun x esbuild server/src/nodeServerMain.ts --bundle --platform=node --outfile=server/dist/nodeServerMain.js --external:vscode && bun x esbuild server/src/browserServerMain.ts --bundle --platform=browser --outfile=server/dist/browserServerMain.js --external:vscode",
         "watch": "bun run build --watch",
         "package": "bun run build && vsce package",
-        "lint": "oxlint",
-        "lint:fix": "oxlint --fix",
-        "fmt": "oxfmt",
-        "fmt:check": "oxfmt --check",
-        "postinstall": "cd client && bun install && cd ../server && bun install && cd ..",
+        "lint": "bun x oxlint",
+        "lint:fix": "bun x oxlint --fix",
+        "fmt": "bun x oxfmt",
+        "fmt:check": "bun x oxfmt --check",
         "chrome": "bun run build && vscode-test-web --browserType=chromium --extensionDevelopmentPath=. ./test-data"
     },
     "devDependencies": {
