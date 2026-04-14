@@ -86,6 +86,7 @@ export class NestHierarchy<t extends NestHierarchy<t>> {
         );
     }
     addNestedChild(child: t) {
+        // oxlint-disable-next-line typescript-eslint/no-this-alias
         let currentParent: NestHierarchy<t> = this;
         while (true) {
             const currentChildChild = currentParent.getChildNodeAt(child.start);

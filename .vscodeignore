@@ -1,4 +1,6 @@
+# Exclude everything by default
 **
+# Include only necessary files
 !graphics/icon_128x128.png
 !graphics/skript icon.png
 !server/dist/*.js
@@ -9,3 +11,20 @@
 !README.md
 !package.json
 !snippets/*
+!.oxlintrc.json
+!.oxfmtrc.json
+!.editorconfig
+
+# Exclude specific patterns for cleaner package
+.vscode/**
+src/**
+test-data/**
+addon-parser/**
+node_modules/**
+*.ts
+*.map
+bun.lock
+package-lock.json
+yarn.lock
+.DS_Store
+*.log

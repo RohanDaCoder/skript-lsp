@@ -41,7 +41,7 @@ export default class Mutex {
 export class Deferred<T> {
     promise: Promise<T>;
     resolve!: (value: T) => void;
-    reject!: (err: any) => void;
+    reject!: (err: unknown) => void;
     constructor() {
         this.promise = new Promise<T>((res, rej) => {
             this.resolve = res;
