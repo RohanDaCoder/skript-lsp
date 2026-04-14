@@ -3,7 +3,10 @@
     "displayName": "IntelliSkript",
     "version": "1.7.30",
     "private": true,
-    "workspaces": ["client", "server"],
+    "workspaces": [
+        "client",
+        "server"
+    ],
     "scripts": {
         "vscode:prepublish": "bun run build",
         "build": "bun run build:client && bun run build:server",
