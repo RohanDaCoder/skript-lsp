@@ -2,17 +2,17 @@ import { ChangeAnnotation, CodeAction, CodeActionKind, CompletionItem, Completio
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { URI } from 'vscode-uri';
 import { IsDebugMode } from './intelliskript-constants';
-import { MatchProgress } from './pattern/match/match-progress';
-import { PatternTreeNode } from './pattern/pattern-tree-node/pattern-tree-node';
-import { removeDuplicates } from './pattern/remove-duplicates';
-import { SkriptPatternCall } from './pattern/skript-pattern';
+import { MatchProgress } from './Pattern/match/match-progress';
+import { PatternTreeNode } from './Pattern/pattern-tree-node/pattern-tree-node';
+import { removeDuplicates } from './Pattern/remove-duplicates';
+import { SkriptPatternCall } from './Pattern/skript-pattern';
 import { SkriptFolder } from './skript/folder-container/skript-folder';
 import { SkriptWorkSpace } from './skript/folder-container/skript-workspace';
 import { SkriptFile } from './skript/section/skript-file';
 import { IndentData } from './skript/validation/indent-data';
 import { SkriptContext } from './skript/validation/skript-context';
 import { WordInfo } from './skript/validation/word-info';
-import { Deferred, Sleep } from './thread';
+import { Deferred, Sleep } from './Thread';
 import { TokenModifiers } from './token-modifiers';
 import { TokenTypes } from './token-types';
 

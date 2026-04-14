@@ -1,5 +1,5 @@
-import { Hierarchy } from '../../hierarchy';
-import { Scope } from '../../pattern/scope';
+import { Hierarchy } from '../../Hierarchy';
+import { Scope } from '../../Pattern/Scope';
 import { SkriptVariable } from '../storage/skript-variable';
 
 export class SkriptSectionGroup extends Hierarchy<SkriptSectionGroup> {

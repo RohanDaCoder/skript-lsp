@@ -1,4 +1,4 @@
-import { TypeData } from '../../../pattern/data/pattern-data';
+import { TypeData } from '../../../Pattern/data/pattern-data';
 import { SkriptTypeSection } from '../../section/custom/skript-type-section';
 
 export class SkriptTypeState {

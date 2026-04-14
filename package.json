@@ -176,7 +176,7 @@
 				"description": "Bukkit color code &f"
 			},
 			{
-				"id": "bukkit_b",
+				"id": "bukkit_bold",
 				"description": "Bukkit bold &b"
 			},
 			{
@@ -211,27 +211,23 @@
 		]
 	},
 	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "webpack",
-		"watch": "webpack --watch",
-		"package": "webpack --mode production --devtool hidden-source-map",
+		"vscode:prepublish": "bun run build",
+		"build": "bun run build:client && bun run build:server",
+		"build:client": "esbuild client/src/nodeClientMain.ts --bundle --platform=node --outfile=client/dist/nodeClientMain.js --external:vscode --external:@vscode/extension-telemetry && esbuild client/src/browserClientMain.ts --bundle --platform=browser --outfile=client/dist/browserClientMain.js --external:vscode --external:@vscode/extension-telemetry",
+		"build:server": "esbuild server/src/nodeServerMain.ts --bundle --platform=node --outfile=server/dist/nodeServerMain.js --external:vscode && esbuild server/src/browserServerMain.ts --bundle --platform=browser --outfile=server/dist/browserServerMain.js --external:vscode",
+		"watch": "bun run build --watch",
+		"package": "bun run build && vsce package",
 		"lint": "eslint",
-		"postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
-		"chrome": "npm run compile && vscode-test-web --browserType=chromium --extensionDevelopmentPath=. ./test-data"
+		"postinstall": "cd client && bun install && cd ../server && bun install && cd ..",
+		"chrome": "bun run build && vscode-test-web --browserType=chromium --extensionDevelopmentPath=. ./test-data"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.13.0",
 		"@stylistic/eslint-plugin": "^2.9.0",
 		"@vscode/test-web": "^0.0.68",
-		"copy-webpack-plugin": "^13.0.0",
+		"esbuild": "^0.24.2",
 		"eslint": "^9.13.0",
-		"path-browserify": "^1.0.1",
-		"ts-loader": "^9.5.1",
-		"ts-node": "^10.9.2",
 		"typescript": "^5.8.2",
-		"typescript-eslint": "^8.26.0",
-		"webpack": "^5.90.1",
-		"webpack-cli": "^5.1.4",
-		"webpack-merge": "^6.0.1"
+		"typescript-eslint": "^8.26.0"
 	}
 }

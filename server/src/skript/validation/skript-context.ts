@@ -1,8 +1,8 @@
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { Diagnostic, DiagnosticSeverity, Location, Range } from 'vscode-languageserver/browser';
 import { SkriptNestHierarchy } from '../../nesting/skript-nest-hierarchy';
-import { PatternData } from '../../pattern/data/pattern-data';
-import { SkriptPatternMatchHierarchy } from '../../pattern/skript-patternmatch-hierarchy';
+import { PatternData } from '../../Pattern/data/pattern-data';
+import { SkriptPatternMatchHierarchy } from '../../Pattern/skript-patternmatch-hierarchy';
 import { TokenModifiers } from '../../token-modifiers';
 import { TokenTypes } from '../../token-types';
 import { SkriptFile } from '../section/skript-file';

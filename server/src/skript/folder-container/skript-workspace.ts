@@ -1,6 +1,6 @@
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { URI } from 'vscode-uri';
-import { Scope } from '../../pattern/scope';
+import { Scope } from '../../Pattern/scope';
 import Mutex from '../../thread';
 import { SkriptFile } from '../section/skript-file';
 import { SkriptFolder } from './skript-folder';

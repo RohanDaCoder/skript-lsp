@@ -1,5 +1,5 @@
 import { DiagnosticSeverity } from 'vscode-languageserver/browser';
-import { PatternType } from '../../../pattern/pattern-type';
+import { PatternType } from '../../../Pattern/pattern-type';
 import { TokenTypes } from '../../../token-types';
 import type { SkriptContext } from '../../validation/skript-context';
 import {

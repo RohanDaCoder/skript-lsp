@@ -1,6 +1,6 @@
 import { URI } from 'vscode-uri';
 import { addToUri, getRelativePathPart, URISeparator } from '../../file-system/file-functions';
-import { Scope } from '../../pattern/scope';
+import { Scope } from '../../Pattern/Scope';
 import { sortedIndex } from '../../sorted-array';
 import { SkriptFile } from '../section/skript-file';
 import { SkriptFolderContainer } from './skript-foldercontainer';

@@ -1,6 +1,6 @@
 import { DiagnosticSeverity, Location } from 'vscode-languageserver/browser';
-import { PatternData, TypeData } from '../../pattern/data/pattern-data';
-import { PatternType } from '../../pattern/pattern-type';
+import { PatternData, TypeData } from '../../Pattern/data/pattern-data';
+import { PatternType } from '../../Pattern/pattern-type';
 import { TokenModifiers } from '../../token-modifiers';
 import { TokenTypes } from '../../token-types';
 import { SkriptVariable } from '../storage/skript-variable';
