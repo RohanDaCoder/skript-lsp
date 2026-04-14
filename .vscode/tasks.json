@@ -1,61 +1,53 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "npm",
-			"script": "compile",
-			"group": "build",
-			"presentation": {
-				"panel": "dedicated",
-				"reveal": "never"
-			},
-			"problemMatcher": [
-				"$ts-webpack",
-				"$tslint-webpack"
-			]
-		},
-		{
-			"type": "npm",
-			"script": "watch",
-			"isBackground": true,
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"presentation": {
-				"panel": "dedicated",
-				"reveal": "never"
-			},
-			"problemMatcher": [
-				"$ts-webpack-watch",
-				"$tslint-webpack-watch"
-			]
-		},
-		{
-			"label": "buildaddonparser",
-			"type": "typescript",
-			"tsconfig": "addon-parser/tsconfig.json",
-			"problemMatcher": [
-				"$tsc"
-			],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			}
-		},
-		{
-			"label": "publish extension",
-			"type": "shell",
-			"command": "${workspaceFolder}\\publisher\\publish.bat",
-			//"options": {
-			//	"shell": {
-			//		"executable": "cmd.exe",
-			//		"args": [
-			//			"/d",
-			//			"/c"
-			//		]
-			//	}
-			//},
-		}
-	]
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "npm",
+            "script": "compile",
+            "group": "build",
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "never"
+            },
+            "problemMatcher": ["$ts-webpack", "$tslint-webpack"]
+        },
+        {
+            "type": "npm",
+            "script": "watch",
+            "isBackground": true,
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "never"
+            },
+            "problemMatcher": ["$ts-webpack-watch", "$tslint-webpack-watch"]
+        },
+        {
+            "label": "buildaddonparser",
+            "type": "typescript",
+            "tsconfig": "addon-parser/tsconfig.json",
+            "problemMatcher": ["$tsc"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "publish extension",
+            "type": "shell",
+            "command": "${workspaceFolder}\\publisher\\publish.bat"
+            //"options": {
+            //	"shell": {
+            //		"executable": "cmd.exe",
+            //		"args": [
+            //			"/d",
+            //			"/c"
+            //		]
+            //	}
+            //},
+        }
+    ]
 }

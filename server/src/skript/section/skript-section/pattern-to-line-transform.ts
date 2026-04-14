@@ -1,4 +1,4 @@
-import { integer } from 'vscode-languageserver/browser';
+import { integer } from "vscode-languageserver/browser";
 
 export interface PatternKeyFrame {
     patternPos: integer;
@@ -11,15 +11,18 @@ export interface PatternKeyFrame {
  * then a keyframe will be added at the space in the pattern behind the '%' to point to the space in the pattern behind the 'like'
  */
 export class TransformedPattern {
-    pattern: string = '';
+    pattern: string = "";
     keypoints: PatternKeyFrame[] = [];
     constructor(pattern: string = "") {
         this.pattern = pattern;
     }
-    transformPosition(inPos: integer, keyFrameToInPos: (kf: PatternKeyFrame) => number, keyFrameToOutPos: (kf: PatternKeyFrame) => number) {
-        if (this.keypoints.length == 0 || inPos < keyFrameToInPos(this.keypoints[0]))
-            return inPos;
-        for (let keyFrameIndex = this.keypoints.length; --keyFrameIndex >= 0;) {
+    transformPosition(
+        inPos: integer,
+        keyFrameToInPos: (kf: PatternKeyFrame) => number,
+        keyFrameToOutPos: (kf: PatternKeyFrame) => number
+    ) {
+        if (this.keypoints.length == 0 || inPos < keyFrameToInPos(this.keypoints[0])) return inPos;
+        for (let keyFrameIndex = this.keypoints.length; --keyFrameIndex >= 0; ) {
             const keyFrame = this.keypoints[keyFrameIndex];
             const difference = inPos - keyFrameToInPos(keyFrame);
             if (difference >= 0) {
@@ -30,18 +33,33 @@ export class TransformedPattern {
         return 0;
     }
     getLinePos(patternPos: integer): integer {
-        return this.transformPosition(patternPos, kf => kf.patternPos, kf => kf.linePos);
+        return this.transformPosition(
+            patternPos,
+            (kf) => kf.patternPos,
+            (kf) => kf.linePos
+        );
     }
     getPatternPos(linePos: integer): integer {
-        return this.transformPosition(linePos, kf => kf.linePos, kf => kf.patternPos);
+        return this.transformPosition(
+            linePos,
+            (kf) => kf.linePos,
+            (kf) => kf.patternPos
+        );
     }
-    replaceInPattern(patternStartPos: integer, patternEndPos: integer, lineEndPos: integer = this.getLinePos(patternEndPos)) {
-        this.pattern = this.pattern.substring(0, patternStartPos) + '%' + this.pattern.substring(patternEndPos);
+    replaceInPattern(
+        patternStartPos: integer,
+        patternEndPos: integer,
+        lineEndPos: integer = this.getLinePos(patternEndPos)
+    ) {
+        this.pattern =
+            this.pattern.substring(0, patternStartPos) +
+            "%" +
+            this.pattern.substring(patternEndPos);
         const shift = patternEndPos - (patternStartPos + 1);
         if (shift) {
             let added = false;
             const newKeyFrame = { patternPos: patternEndPos - shift, linePos: lineEndPos };
-            for (let keyframeIndex = 0; keyframeIndex < this.keypoints.length;) {
+            for (let keyframeIndex = 0; keyframeIndex < this.keypoints.length; ) {
                 const keyFrame = this.keypoints[keyframeIndex];
                 if (keyFrame.patternPos > patternStartPos) {
                     if (keyFrame.patternPos >= patternEndPos) {
@@ -53,8 +71,7 @@ export class TransformedPattern {
                         }
                         //shift all keyframes on the right to the left
                         keyFrame.patternPos -= shift;
-                    }
-                    else {
+                    } else {
                         //remove keyframe, it got replaced by a '%'
                         this.keypoints.splice(keyframeIndex, 1);
                         continue;
@@ -68,11 +85,15 @@ export class TransformedPattern {
         }
     }
     replace(lineStartPos: integer, lineEndPos: integer) {
-        this.replaceInPattern(this.getPatternPos(lineStartPos), this.getPatternPos(lineEndPos), lineEndPos);
+        this.replaceInPattern(
+            this.getPatternPos(lineStartPos),
+            this.getPatternPos(lineEndPos),
+            lineEndPos
+        );
     }
     clone(): TransformedPattern {
         const cloned = new TransformedPattern(this.pattern);
-        cloned.keypoints = this.keypoints.map(kp => ({ ...kp }));
+        cloned.keypoints = this.keypoints.map((kp) => ({ ...kp }));
         return cloned;
     }
 }

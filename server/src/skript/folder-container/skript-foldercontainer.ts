@@ -1,10 +1,10 @@
-import { URI } from 'vscode-uri';
-import { isRelativeURI } from '../../file-system/file-functions';
-import { SkriptSectionGroup } from '../section/skript-section-group';
-import type { SkriptFolder } from './skript-folder';
+import { URI } from "vscode-uri";
+import { isRelativeURI } from "../../file-system/file-functions";
+import { SkriptSectionGroup } from "../section/skript-section-group";
+import type { SkriptFolder } from "./skript-folder";
 
 export class SkriptFolderContainer extends SkriptSectionGroup {
-	/**child folders, ordered alphabetically */
+    /**child folders, ordered alphabetically */
     override children: SkriptFolder[] = [];
     getSubFolderByUri(uri: URI): SkriptFolder | undefined {
         //const resolvedUri = resolveUri(uri);

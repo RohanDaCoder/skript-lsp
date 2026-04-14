@@ -1,5 +1,5 @@
 import { SkriptTypeState } from "../skript/storage/type/skript-type-state";
-import { PatternType } from './pattern-type';
+import { PatternType } from "./pattern-type";
 //examples:
 //  "set %objects% to %objects%"
 //  |
@@ -25,11 +25,15 @@ export class SkriptPatternCall {
     patternTypes = [PatternType.effect];
     /**the type the pattern is expected to return */
     returnType: SkriptTypeState;
-    constructor(pattern: string, types: PatternType[], expressionArguments: SkriptTypeState[] = [], returnType: SkriptTypeState = new SkriptTypeState()) {
+    constructor(
+        pattern: string,
+        types: PatternType[],
+        expressionArguments: SkriptTypeState[] = [],
+        returnType: SkriptTypeState = new SkriptTypeState()
+    ) {
         this.pattern = pattern.toLowerCase();
         this.patternTypes = types;
         this.expressionArguments = expressionArguments;
         this.returnType = returnType;
     }
-
 }

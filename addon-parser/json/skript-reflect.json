@@ -1,446 +1,361 @@
 {
-  "events": [
-    {
-      "id": "consent",
-      "name": "Consent",
-      "patterns": [
-        "skript-(mirror|reflect), I know what I'm doing"
-      ]
-    },
-    {
-      "id": "define_condition",
-      "name": "Define Condition",
-      "patterns": [
-        "[(local)] condition <.+>",
-        "[(local)] condition",
-        "[(local)] %*classinfos% property condition <.+>"
-      ]
-    },
-    {
-      "id": "define_constant",
-      "name": "Define Constant",
-      "patterns": [
-        "option <.+>"
-      ]
-    },
-    {
-      "id": "define_effect",
-      "name": "Define Effect",
-      "patterns": [
-        "[(local)] effect <.+>",
-        "[(local)] effect"
-      ]
-    },
-    {
-      "id": "define_event",
-      "name": "Define Event",
-      "patterns": [
-        "[(local)] [custom] event %string%"
-      ]
-    },
-    {
-      "id": "define_expression",
-      "name": "Define Expression",
-      "patterns": [
-        "[(local)] [((plural|non(-|[ ])single))] expression <.+>",
-        "[(local)] [((plural|non(-|[ ])single))] expression",
-        "[(local)] [((plural|non(-|[ ])single))] %*classinfos% property <.+>"
-      ]
-    },
-    {
-      "id": "import",
-      "name": "Import",
-      "patterns": [
-        "import"
-      ]
-    },
-    {
-      "id": "bukkit",
-      "name": "On Bukkit",
-      "patterns": [
-        "[on] [(all)] %javatypes% [(at|on|with) priority <.+>]"
-      ],
-      "cancellable": true
-    }
-  ],
-  "conditions": [
-    {
-      "id": "CondEventCancelled",
-      "name": "CondEventCancelled",
-      "patterns": [
-        "%events% (is|are) cancelled",
-        "%events% (isn't|is not|aren't|are not) cancelled"
-      ]
-    },
-    {
-      "id": "CondExpressionStatement",
-      "name": "CondExpressionStatement",
-      "patterns": [
-        "[(await)] %javaobject%"
-      ]
-    },
-    {
-      "id": "CondIsInstanceOf",
-      "name": "CondIsInstanceOf",
-      "patterns": [
-        "%objects% (is|are) [a[n]] instance[s] of %javatypes%",
-        "%objects% (is not|isn't|are not|aren't) [a[n]] instance[s] of %javatypes%"
-      ]
-    },
-    {
-      "id": "CondParseLater",
-      "name": "CondParseLater",
-      "patterns": [
-        "(parse[d] later) <.+>"
-      ]
-    }
-  ],
-  "effects": [
-    {
-      "id": "EffCallEvent",
-      "name": "EffCallEvent",
-      "patterns": [
-        "call [event] %events%"
-      ]
-    },
-    {
-      "id": "EffContinue",
-      "name": "EffContinue",
-      "patterns": [
-        "continue"
-      ]
-    },
-    {
-      "id": "EffDelayEffect",
-      "name": "EffDelayEffect",
-      "patterns": [
-        "delay [the] [current] effect"
-      ]
-    },
-    {
-      "id": "EffExpressionStatement",
-      "name": "EffExpressionStatement",
-      "patterns": [
-        "[(await)] %javaobject%"
-      ]
-    },
-    {
-      "id": "EffImport",
-      "name": "EffImport",
-      "patterns": [
-        "import <((?:[_a-zA-Z$][\\w$]*\\.)*(?:[_a-zA-Z$][\\w$]*))(?:\\s+as ([_a-zA-Z$][\\w$]*))?>"
-      ]
-    },
-    {
-      "id": "EffNegateCondition",
-      "name": "EffNegateCondition",
-      "patterns": [
-        "negate [the] [current] condition"
-      ]
-    },
-    {
-      "id": "EffReturn",
-      "name": "EffReturn",
-      "patterns": [
-        "return [%objects%]"
-      ]
-    },
-    {
-      "id": "EffRunSection",
-      "name": "EffRunSection",
-      "patterns": [
-        "run section %section% [(sync|async)] [with [arguments] %objects%] [and store [the] result in %objects%] [(and wait)]"
-      ]
-    }
-  ],
-  "expressions": [
-    {
-      "id": "ExprArrayAccess",
-      "name": "ExprArrayAccess",
-      "return type": "Object",
-      "changers": [
-        "set",
-        "delete"
-      ],
-      "patterns": [
-        "%javaobject%\\[%number%\\]"
-      ]
-    },
-    {
-      "id": "ExprBits",
-      "name": "ExprBits",
-      "return type": "Number",
-      "changers": [
-        "unknown"
-      ],
-      "patterns": [
-        "[the] (bit %number%|bit(s| range) [from] %number%( to |[ ]-[ ])%number%) of %numbers%",
-        "%numbers%'[s] (bit %number%|bit(s| range) [from] %number%( to |[ ]-[ ])%number%)"
-      ]
-    },
-    {
-      "id": "ExprChangeValue",
-      "name": "ExprChangeValue",
-      "return type": "Object",
-      "patterns": [
-        "[the] change value[(s)]"
-      ]
-    },
-    {
-      "id": "ExprClassReference",
-      "name": "ExprClassReference",
-      "return type": "javaobject",
-      "patterns": [
-        "(<(boolean|byte|double|char|short|float|int|long)>|%javatype%).class"
-      ]
-    },
-    {
-      "id": "ExprCollect",
-      "name": "ExprCollect",
-      "return type": "javaobject",
-      "patterns": [
-        "\\[%objects%[ as %javatype%[ ]]\\]"
-      ]
-    },
-    {
-      "id": "ExprCustomEventValue",
-      "name": "ExprCustomEventValue",
-      "return type": "Object",
-      "changers": [
-        "unknown"
-      ],
-      "patterns": [
-        "[the] [event-]<.+>"
-      ]
-    },
-    {
-      "id": "ExprEvent",
-      "name": "ExprEvent",
-      "return type": "event",
-      "patterns": [
-        "[the] event"
-      ]
-    },
-    {
-      "id": "ExprEventClasses",
-      "name": "ExprEventClasses",
-      "return type": "javatype",
-      "patterns": [
-        "event-classes"
-      ]
-    },
-    {
-      "id": "ExprEventData",
-      "name": "ExprEventData",
-      "return type": "Object",
-      "patterns": [
-        "[extra] [event(-| )]data %string%"
-      ]
-    },
-    {
-      "id": "ExprExpression",
-      "name": "ExprExpression",
-      "return type": "Object",
-      "patterns": [
-        "[the] expr[ession][(s)](-| )<\\d+>"
-      ]
-    },
-    {
-      "id": "ExprFunction",
-      "name": "ExprFunction",
-      "return type": "Object",
-      "patterns": [
-        "[the] function(s| [reference[s]]) %strings% [called with [[the] [arg[ument][s]]] %objects%]"
-      ]
-    },
-    {
-      "id": "ExprJavaCall",
-      "name": "ExprJavaCall",
-      "return type": "Object",
-      "patterns": [
-        "[(try)] %object%..%string%[(([%objects%]))]",
-        "[(try)] %object%.<(\\[[\\w.$]*])?([^0-9. \\[\\]][^. \\[\\]]*\\b)(\\[[\\w.$, ]*])?>[(([%objects%]))]",
-        "[(try)] [a] new %javatype%([%objects%])"
-      ]
-    },
-    {
-      "id": "ExprJavaError",
-      "name": "ExprJavaError",
-      "return type": "Object",
-      "patterns": [
-        "[the] [last] [java] (throwable|exception|error)"
-      ]
-    },
-    {
-      "id": "ExprJavaType",
-      "name": "ExprJavaType",
-      "return type": "javatype",
-      "patterns": [
-        "[the] [java] class %string%"
-      ]
-    },
-    {
-      "id": "ExprJavaTypeOf",
-      "name": "ExprJavaTypeOf",
-      "return type": "javatype",
-      "patterns": [
-        "[the] [java] class[es] of %objects%",
-        "%objects%'[s] [java] class[es]"
-      ]
-    },
-    {
-      "id": "ExprMatchedPattern",
-      "name": "ExprMatchedPattern",
-      "return type": "Number",
-      "patterns": [
-        "[the] [matched] pattern"
-      ]
-    },
-    {
-      "id": "ExprMemberNames",
-      "name": "ExprMemberNames",
-      "return type": "Text",
-      "patterns": [
-        "[the] (field|method) names of %objects%",
-        "%objects%'[s] (field|method) names"
-      ]
-    },
-    {
-      "id": "ExprMembers",
-      "name": "ExprMembers",
-      "return type": "Text",
-      "patterns": [
-        "[the] (fields|methods|constructors) of %objects%",
-        "%objects%'[s] (fields|methods|constructors)"
-      ]
-    },
-    {
-      "id": "ExprNewArray",
-      "name": "ExprNewArray",
-      "return type": "javaobject",
-      "patterns": [
-        "new (<(boolean|byte|double|char|short|float|int|long)>|%javatype%)\\[%number%\\]"
-      ]
-    },
-    {
-      "id": "ExprParseMark",
-      "name": "ExprParseMark",
-      "return type": "Number",
-      "patterns": [
-        "[the] [parse[r]] mark"
-      ]
-    },
-    {
-      "id": "ExprParseRegex",
-      "name": "ExprParseRegex",
-      "return type": "Text",
-      "patterns": [
-        "[the] [parse[r]] (regex|regular expression)(-| )<\\d+>"
-      ]
-    },
-    {
-      "id": "ExprParseTags",
-      "name": "ExprParseTags",
-      "return type": "Text",
-      "patterns": [
-        "[the] parse[r] tags"
-      ]
-    },
-    {
-      "id": "ExprProxy",
-      "name": "ExprProxy",
-      "return type": "Object",
-      "patterns": [
-        "[a] [new] proxy [instance] of %javatypes% (using|from) %objects%"
-      ]
-    },
-    {
-      "id": "ExprRawExpression",
-      "name": "ExprRawExpression",
-      "return type": "Object",
-      "patterns": [
-        "[the] raw %objects%"
-      ]
-    },
-    {
-      "id": "ExprSpread",
-      "name": "ExprSpread",
-      "return type": "Object",
-      "patterns": [
-        "...%object%"
-      ]
-    },
-    {
-      "id": "ImportHandler",
-      "name": "ImportHandler",
-      "return type": "javatype",
-      "patterns": [
-        "ChatChannel",
-        "LuckPerms",
-        "Player",
-        "Set",
-        "User",
-        "LuckPermsProvider",
-        "MineverseChatAPI",
-        "MineverseChatPlayer",
-        "IWarps",
-        "Essentials",
-        "ServerCommandEvent",
-        "VaultHook",
-        "PlaceholderAPI",
-        "EntityDamageByEntityEvent",
-        "JavaString",
-        "UUID",
-        "Bukkit",
-        "World"
-      ]
-    },
-    {
-      "id": "LitNullObject",
-      "name": "LitNullObject",
-      "return type": "null",
-      "patterns": [
-        "null"
-      ]
-    }
-  ],
-  "types": [
-    {
-      "id": "Event",
-      "name": "event",
-      "patterns": [
-        "event[s]"
-      ]
-    },
-    {
-      "id": "ObjectWrapper",
-      "name": "javaobject",
-      "patterns": [
-        "javaobject[s]"
-      ]
-    },
-    {
-      "id": "JavaType",
-      "name": "javatype",
-      "patterns": [
-        "javatype[s]"
-      ]
-    },
-    {
-      "id": "Null",
-      "name": "null",
-      "patterns": [
-        "null"
-      ]
-    }
-  ],
-  "sections": [
-    {
-      "id": "SecSection",
-      "name": "SecSection",
-      "patterns": [
-        "create [new] section [with [arguments variables] %objects%] (and store it|stored) in %objects%"
-      ]
-    }
-  ]
+    "events": [
+        {
+            "id": "consent",
+            "name": "Consent",
+            "patterns": ["skript-(mirror|reflect), I know what I'm doing"]
+        },
+        {
+            "id": "define_condition",
+            "name": "Define Condition",
+            "patterns": [
+                "[(local)] condition <.+>",
+                "[(local)] condition",
+                "[(local)] %*classinfos% property condition <.+>"
+            ]
+        },
+        {
+            "id": "define_constant",
+            "name": "Define Constant",
+            "patterns": ["option <.+>"]
+        },
+        {
+            "id": "define_effect",
+            "name": "Define Effect",
+            "patterns": ["[(local)] effect <.+>", "[(local)] effect"]
+        },
+        {
+            "id": "define_event",
+            "name": "Define Event",
+            "patterns": ["[(local)] [custom] event %string%"]
+        },
+        {
+            "id": "define_expression",
+            "name": "Define Expression",
+            "patterns": [
+                "[(local)] [((plural|non(-|[ ])single))] expression <.+>",
+                "[(local)] [((plural|non(-|[ ])single))] expression",
+                "[(local)] [((plural|non(-|[ ])single))] %*classinfos% property <.+>"
+            ]
+        },
+        {
+            "id": "import",
+            "name": "Import",
+            "patterns": ["import"]
+        },
+        {
+            "id": "bukkit",
+            "name": "On Bukkit",
+            "patterns": ["[on] [(all)] %javatypes% [(at|on|with) priority <.+>]"],
+            "cancellable": true
+        }
+    ],
+    "conditions": [
+        {
+            "id": "CondEventCancelled",
+            "name": "CondEventCancelled",
+            "patterns": [
+                "%events% (is|are) cancelled",
+                "%events% (isn't|is not|aren't|are not) cancelled"
+            ]
+        },
+        {
+            "id": "CondExpressionStatement",
+            "name": "CondExpressionStatement",
+            "patterns": ["[(await)] %javaobject%"]
+        },
+        {
+            "id": "CondIsInstanceOf",
+            "name": "CondIsInstanceOf",
+            "patterns": [
+                "%objects% (is|are) [a[n]] instance[s] of %javatypes%",
+                "%objects% (is not|isn't|are not|aren't) [a[n]] instance[s] of %javatypes%"
+            ]
+        },
+        {
+            "id": "CondParseLater",
+            "name": "CondParseLater",
+            "patterns": ["(parse[d] later) <.+>"]
+        }
+    ],
+    "effects": [
+        {
+            "id": "EffCallEvent",
+            "name": "EffCallEvent",
+            "patterns": ["call [event] %events%"]
+        },
+        {
+            "id": "EffContinue",
+            "name": "EffContinue",
+            "patterns": ["continue"]
+        },
+        {
+            "id": "EffDelayEffect",
+            "name": "EffDelayEffect",
+            "patterns": ["delay [the] [current] effect"]
+        },
+        {
+            "id": "EffExpressionStatement",
+            "name": "EffExpressionStatement",
+            "patterns": ["[(await)] %javaobject%"]
+        },
+        {
+            "id": "EffImport",
+            "name": "EffImport",
+            "patterns": [
+                "import <((?:[_a-zA-Z$][\\w$]*\\.)*(?:[_a-zA-Z$][\\w$]*))(?:\\s+as ([_a-zA-Z$][\\w$]*))?>"
+            ]
+        },
+        {
+            "id": "EffNegateCondition",
+            "name": "EffNegateCondition",
+            "patterns": ["negate [the] [current] condition"]
+        },
+        {
+            "id": "EffReturn",
+            "name": "EffReturn",
+            "patterns": ["return [%objects%]"]
+        },
+        {
+            "id": "EffRunSection",
+            "name": "EffRunSection",
+            "patterns": [
+                "run section %section% [(sync|async)] [with [arguments] %objects%] [and store [the] result in %objects%] [(and wait)]"
+            ]
+        }
+    ],
+    "expressions": [
+        {
+            "id": "ExprArrayAccess",
+            "name": "ExprArrayAccess",
+            "return type": "Object",
+            "changers": ["set", "delete"],
+            "patterns": ["%javaobject%\\[%number%\\]"]
+        },
+        {
+            "id": "ExprBits",
+            "name": "ExprBits",
+            "return type": "Number",
+            "changers": ["unknown"],
+            "patterns": [
+                "[the] (bit %number%|bit(s| range) [from] %number%( to |[ ]-[ ])%number%) of %numbers%",
+                "%numbers%'[s] (bit %number%|bit(s| range) [from] %number%( to |[ ]-[ ])%number%)"
+            ]
+        },
+        {
+            "id": "ExprChangeValue",
+            "name": "ExprChangeValue",
+            "return type": "Object",
+            "patterns": ["[the] change value[(s)]"]
+        },
+        {
+            "id": "ExprClassReference",
+            "name": "ExprClassReference",
+            "return type": "javaobject",
+            "patterns": ["(<(boolean|byte|double|char|short|float|int|long)>|%javatype%).class"]
+        },
+        {
+            "id": "ExprCollect",
+            "name": "ExprCollect",
+            "return type": "javaobject",
+            "patterns": ["\\[%objects%[ as %javatype%[ ]]\\]"]
+        },
+        {
+            "id": "ExprCustomEventValue",
+            "name": "ExprCustomEventValue",
+            "return type": "Object",
+            "changers": ["unknown"],
+            "patterns": ["[the] [event-]<.+>"]
+        },
+        {
+            "id": "ExprEvent",
+            "name": "ExprEvent",
+            "return type": "event",
+            "patterns": ["[the] event"]
+        },
+        {
+            "id": "ExprEventClasses",
+            "name": "ExprEventClasses",
+            "return type": "javatype",
+            "patterns": ["event-classes"]
+        },
+        {
+            "id": "ExprEventData",
+            "name": "ExprEventData",
+            "return type": "Object",
+            "patterns": ["[extra] [event(-| )]data %string%"]
+        },
+        {
+            "id": "ExprExpression",
+            "name": "ExprExpression",
+            "return type": "Object",
+            "patterns": ["[the] expr[ession][(s)](-| )<\\d+>"]
+        },
+        {
+            "id": "ExprFunction",
+            "name": "ExprFunction",
+            "return type": "Object",
+            "patterns": [
+                "[the] function(s| [reference[s]]) %strings% [called with [[the] [arg[ument][s]]] %objects%]"
+            ]
+        },
+        {
+            "id": "ExprJavaCall",
+            "name": "ExprJavaCall",
+            "return type": "Object",
+            "patterns": [
+                "[(try)] %object%..%string%[(([%objects%]))]",
+                "[(try)] %object%.<(\\[[\\w.$]*])?([^0-9. \\[\\]][^. \\[\\]]*\\b)(\\[[\\w.$, ]*])?>[(([%objects%]))]",
+                "[(try)] [a] new %javatype%([%objects%])"
+            ]
+        },
+        {
+            "id": "ExprJavaError",
+            "name": "ExprJavaError",
+            "return type": "Object",
+            "patterns": ["[the] [last] [java] (throwable|exception|error)"]
+        },
+        {
+            "id": "ExprJavaType",
+            "name": "ExprJavaType",
+            "return type": "javatype",
+            "patterns": ["[the] [java] class %string%"]
+        },
+        {
+            "id": "ExprJavaTypeOf",
+            "name": "ExprJavaTypeOf",
+            "return type": "javatype",
+            "patterns": ["[the] [java] class[es] of %objects%", "%objects%'[s] [java] class[es]"]
+        },
+        {
+            "id": "ExprMatchedPattern",
+            "name": "ExprMatchedPattern",
+            "return type": "Number",
+            "patterns": ["[the] [matched] pattern"]
+        },
+        {
+            "id": "ExprMemberNames",
+            "name": "ExprMemberNames",
+            "return type": "Text",
+            "patterns": [
+                "[the] (field|method) names of %objects%",
+                "%objects%'[s] (field|method) names"
+            ]
+        },
+        {
+            "id": "ExprMembers",
+            "name": "ExprMembers",
+            "return type": "Text",
+            "patterns": [
+                "[the] (fields|methods|constructors) of %objects%",
+                "%objects%'[s] (fields|methods|constructors)"
+            ]
+        },
+        {
+            "id": "ExprNewArray",
+            "name": "ExprNewArray",
+            "return type": "javaobject",
+            "patterns": [
+                "new (<(boolean|byte|double|char|short|float|int|long)>|%javatype%)\\[%number%\\]"
+            ]
+        },
+        {
+            "id": "ExprParseMark",
+            "name": "ExprParseMark",
+            "return type": "Number",
+            "patterns": ["[the] [parse[r]] mark"]
+        },
+        {
+            "id": "ExprParseRegex",
+            "name": "ExprParseRegex",
+            "return type": "Text",
+            "patterns": ["[the] [parse[r]] (regex|regular expression)(-| )<\\d+>"]
+        },
+        {
+            "id": "ExprParseTags",
+            "name": "ExprParseTags",
+            "return type": "Text",
+            "patterns": ["[the] parse[r] tags"]
+        },
+        {
+            "id": "ExprProxy",
+            "name": "ExprProxy",
+            "return type": "Object",
+            "patterns": ["[a] [new] proxy [instance] of %javatypes% (using|from) %objects%"]
+        },
+        {
+            "id": "ExprRawExpression",
+            "name": "ExprRawExpression",
+            "return type": "Object",
+            "patterns": ["[the] raw %objects%"]
+        },
+        {
+            "id": "ExprSpread",
+            "name": "ExprSpread",
+            "return type": "Object",
+            "patterns": ["...%object%"]
+        },
+        {
+            "id": "ImportHandler",
+            "name": "ImportHandler",
+            "return type": "javatype",
+            "patterns": [
+                "ChatChannel",
+                "LuckPerms",
+                "Player",
+                "Set",
+                "User",
+                "LuckPermsProvider",
+                "MineverseChatAPI",
+                "MineverseChatPlayer",
+                "IWarps",
+                "Essentials",
+                "ServerCommandEvent",
+                "VaultHook",
+                "PlaceholderAPI",
+                "EntityDamageByEntityEvent",
+                "JavaString",
+                "UUID",
+                "Bukkit",
+                "World"
+            ]
+        },
+        {
+            "id": "LitNullObject",
+            "name": "LitNullObject",
+            "return type": "null",
+            "patterns": ["null"]
+        }
+    ],
+    "types": [
+        {
+            "id": "Event",
+            "name": "event",
+            "patterns": ["event[s]"]
+        },
+        {
+            "id": "ObjectWrapper",
+            "name": "javaobject",
+            "patterns": ["javaobject[s]"]
+        },
+        {
+            "id": "JavaType",
+            "name": "javatype",
+            "patterns": ["javatype[s]"]
+        },
+        {
+            "id": "Null",
+            "name": "null",
+            "patterns": ["null"]
+        }
+    ],
+    "sections": [
+        {
+            "id": "SecSection",
+            "name": "SecSection",
+            "patterns": [
+                "create [new] section [with [arguments variables] %objects%] (and store it|stored) in %objects%"
+            ]
+        }
+    ]
 }
