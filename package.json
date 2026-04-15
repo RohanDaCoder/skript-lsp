@@ -23,10 +23,6 @@
         "url": "https://github.com/intelliskript/intelliskript"
     },
     "publisher": "IntelliSkript",
-    "workspaces": [
-        "client",
-        "server"
-    ],
     "scripts": {
         "vscode:prepublish": "bun run build",
         "build": "bun run build:client && bun run build:server",
