@@ -6,9 +6,6 @@ export class SkriptSectionGroup extends Hierarchy<SkriptSectionGroup> {
     scope?: Scope;
     definedVariables: Array<SkriptVariable> = [];
     override children: SkriptSectionGroup[] = [];
-    constructor(parent?: SkriptSectionGroup) {
-        super(parent);
-    }
 
     getVariableByName(_name: string): SkriptVariable | undefined {
         //throw new Error("skriptsectiongroup without derivation");

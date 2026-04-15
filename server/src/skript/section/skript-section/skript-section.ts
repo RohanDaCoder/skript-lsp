@@ -410,7 +410,7 @@ export class SkriptSection extends SkriptSectionGroup {
 
             //pattern arguments sorted by key (their offset)
             let currentPatternArguments = Array.from(mergedPatternArguments.entries())
-                .sort(([keyA], [keyB]) => keyA - keyB) //sort
+                .toSorted(([keyA], [keyB]) => keyA - keyB) //sort
                 .map(([, value]) => value); //erase keys
 
             if (
@@ -421,6 +421,7 @@ export class SkriptSection extends SkriptSectionGroup {
                     mainPatternTypes.includes(PatternType.effect) ||
                     mainPatternTypes.includes(PatternType.expression)) //we don't have to evaluate anything
             ) {
+                // Skip validation for single argument patterns that don't need evaluation
             } else {
                 let doubleSpacesRegex = /(?:\s{2,}|[^\S ])/g;
                 let nonWhiteSpaceMatchArray;
@@ -636,7 +637,4 @@ import { PatternMatch } from "../../../Pattern/match/pattern-match";
 import { SkriptLoopSection } from "../skript-loop-section";
 
 export class SkriptConditionSection extends SkriptSection {
-    constructor(parent: SkriptSection, context: SkriptContext) {
-        super(parent, context);
-    }
 }

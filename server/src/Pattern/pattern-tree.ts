@@ -20,11 +20,12 @@ import { TypeNode } from "./pattern-tree-node/type-node";
 //flags: U -> ungreedy, g -> global. percentages are escapable with a slash.
 const argumentRegExp = /(?<!\\)%(.*?)(?<!\\)%/g;
 
+function convertString(input: string): string {
+    const replaceRegex = /\?|\+|\*|\/|\./g;
+    return input.replace(replaceRegex, "\\$&").replace(/\(|\)/g, "(\\$&)?");
+}
+
 function convertSkriptPatternToRegExp(pattern: string, hierarchy: SkriptNestHierarchy): string {
-    function convertString(input: string): string {
-        const replaceRegex = /\?|\+|\*|\/|\./g;
-        return input.replace(replaceRegex, "\\$&").replace(/\(|\)/g, "(\\$&)?");
-    }
     let currentPosition = hierarchy.start;
     let fixedString = "";
     for (const child of hierarchy.children) {
@@ -214,7 +215,7 @@ export class PatternTree {
                 >();
 
                 /**only merge new nodes. */
-                let mergedNode: PatternTreeNode | undefined = undefined;
+                let mergedNodeOuter: PatternTreeNode | undefined = undefined;
                 //for each possibility of this pattern, loop over the letters
                 for (
                     let splitNodeIndex = 0;
@@ -233,15 +234,15 @@ export class PatternTree {
                         const existingNode = children.get(key);
                         if (existingNode == undefined) {
                             //create a new node. we'll only create one new node, since everything that comes after this will connect.
-                            if (mergedNode == undefined) {
-                                mergedNode = nodeFunc();
-                                newNodes.push(mergedNode);
+                            if (mergedNodeOuter == undefined) {
+                                mergedNodeOuter = nodeFunc();
+                                newNodes.push(mergedNodeOuter);
                             }
-                            children.set(key, mergedNode);
+                            children.set(key, mergedNodeOuter);
                             //add the current split node to the parents so:
                             // when we use this node in another pattern, we can check if we're using the same parents.
                             // and we can reorganize nodes later.
-                            mergedNode.parentGroups.push(children);
+                            mergedNodeOuter.parentGroups.push(children);
                         } else {
                             //use the existing node. when it has different parents than the new ones, a clone will be created
                             let nodeData = dataByMergedNode.get(existingNode);
@@ -325,8 +326,8 @@ export class PatternTree {
                 }
                 //fix up the clutter
                 //check if there are any nodes which have different parent nodes
-                for (const [mergedNode, mergedNodeData] of dataByMergedNode) {
-                    const oldParentGroups = mergedNode.parentGroups;
+                for (const [existingMergedNode, mergedNodeData] of dataByMergedNode) {
+                    const oldParentGroups = existingMergedNode.parentGroups;
                     const newParentGroups = mergedNodeData.newParentGroups;
                     // check if the nodes have the same parents. when they don't, they get split into 2 groups:
 
@@ -626,13 +627,6 @@ export class PatternTree {
             if (this.root) {
                 this.addToTree(pattern);
             }
-        }
-        //if (pattern.skriptPatternString[0] == '<' && pattern.skriptPatternString[pattern.skriptPatternString.length - 1] == '>') {
-        //	//most of these patterns aren't actually used in our code
-        //	//if(pattern.regexPatternString.includes('\\d+'))
-        //	this.incompatiblePatterns.push(pattern);
-        //}
-        else {
         }
     }
 }

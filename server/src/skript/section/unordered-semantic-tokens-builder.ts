@@ -9,6 +9,10 @@ import { IsDebugMode } from "../../intelliskript-constants";
 import { TokenModifiers } from "../../token-modifiers";
 import { TokenTypes } from "../../token-types";
 
+function positionToString(position: Position): string {
+    return `line ${position.line}, char ${position.character}`;
+}
+
 export class SemanticToken {
     static modToFlags(modifiers: TokenModifiers[]) {
         let flag = 0;
@@ -58,9 +62,6 @@ export class SemanticTokenLine {
     }
     push(token: SemanticToken): void {
         const checkTokens = IsDebugMode && true;
-        function positionToString(position: Position) {
-            return `line ${position.line}, char ${position.character}`;
-        }
         if (token.length > 0) {
             const lineTokens = this.tokens;
             if (checkTokens) {

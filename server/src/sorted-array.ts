@@ -14,7 +14,7 @@ export function sortedIndex<tArr, tComp>(
     high: number = array.length
 ) {
     while (low < high) {
-        var mid = (low + high) >>> 1;
+        const mid = (low + high) >>> 1;
         //array[mid] < value
         if (compare(array[mid], value)) low = mid + 1;
         else high = mid;

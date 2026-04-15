@@ -127,7 +127,7 @@ export async function activateClient(context: ExtensionContext, client: BaseLang
     const extensionUri = extensions.getExtension("JohnHeikens.intelliskript")?.extensionUri;
     //for debugger
     if (extensionUri)
-        client.onRequest("custom/getStartData", async (_params: {}) => {
+        client.onRequest("custom/getStartData", async (_params: Record<string, unknown>) => {
             return {
                 addonPath: Uri.from({
                     scheme: intelliskriptScheme,

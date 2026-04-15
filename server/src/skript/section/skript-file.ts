@@ -123,14 +123,14 @@ export class SkriptFile extends SkriptSection {
         } else if (sectionKeyword == "variables") {
             s = new SkriptVariablesSection(this, context);
         } else {
-            const result = /^((local )?((plural|non-single) )?expression)( .*|)/.exec(
+            const expressionResult = /^((local )?((plural|non-single) )?expression)( .*|)/.exec(
                 context.currentString
             );
-            if (result) {
+            if (expressionResult) {
                 addKeywordToken = false;
                 s = new ReflectExpressionSection(this, context);
-                if (result[5]) {
-                    patternStartIndex = result[1].length + " ".length;
+                if (expressionResult[5]) {
+                    patternStartIndex = expressionResult[1].length + " ".length;
                 } else {
                     patternStartIndex = undefined;
                 }
@@ -153,18 +153,12 @@ export class SkriptFile extends SkriptSection {
                         //add keyword token for 'property'
                         context.addToken(TokenTypes.keyword, typeEnd, " property ".length);
                     }
-                    //else {
-                    //	context.addDiagnostic(0, context.currentString.length, "property type not recognized");
-                    //}
                 } else {
                     addKeywordToken = false;
-                    const result = this.detectPatternsRecursively(context, [PatternType.event]);
-                    //const pattern = this.getPatternData(new SkriptPatternCall(context.currentString, PatternType.event), stopAtFirstResultProcessor);
-                    if (result.detectedPattern) {
-                        //event
-                        s = new SkriptEventListenerSection(context, result.detectedPattern);
+                    const eventResult = this.detectPatternsRecursively(context, [PatternType.event]);
+                    if (eventResult.detectedPattern) {
+                        s = new SkriptEventListenerSection(context, eventResult.detectedPattern);
                     }
-                    //else we can't recognise this section. message will be handled elsewhere.
                 }
             }
         }
@@ -360,7 +354,8 @@ export class SkriptFile extends SkriptSection {
                             }
                             throw new Error(
                                 `\nwhile validating line ${currentLineIndex} of ${this.document.uri}:\n` +
-                                    errorMessage
+                                    errorMessage,
+                                { cause: exception }
                             );
                         }
                         const parsedCorrectly =

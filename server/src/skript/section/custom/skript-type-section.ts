@@ -9,14 +9,6 @@ export class SkriptTypeSection extends ReflectPatternContainerSection {
     baseClasses: SkriptTypeSection[] = [];
     patterns: PatternData[] = [];
 
-    constructor(parent: SkriptSectionGroup, context: SkriptContext) {
-        super(parent, context);
-        //if (this.patterns[0]?.skriptPatternString != 'object[s]') {
-        //    const objectType = this.getTypeData('object')?.section;
-        //    if (objectType)
-        //        this.baseClasses.push(objectType as SkriptTypeSection);
-        //}
-    }
     override processLine(context: SkriptContext): void {
         if (context.currentString.startsWith("inherits: ")) {
             let currentPosition = "inherits: ".length;

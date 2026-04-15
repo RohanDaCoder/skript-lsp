@@ -47,6 +47,10 @@ import { Deferred, Sleep } from "./Thread";
 import { TokenModifiers } from "./token-modifiers";
 import { TokenTypes } from "./token-types";
 
+function escapeMarkdownChars(toConvert: string): string {
+    return toConvert.replace(/(\[|\]|\*)/g, "\\$1");
+}
+
 export class Server {
     initialized = new Deferred<void>();
     globalSettings: Thenable<IntelliSkriptSettings> = this.getGlobalSettings();
@@ -58,7 +62,7 @@ export class Server {
     constructor(connection: Connection) {
         this.connection = connection;
         // Create a simple text document manager.
-        const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
+        const textDocumentManager: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
 
         //this function will unlock the workspace when it finished loading
         let unlockWorkSpace: () => void;
@@ -110,7 +114,7 @@ export class Server {
             { uri: string; content: string }[],
             void
         >("custom/getDocuments");
-        const getStartDataRequest = new RequestType<{}, { addonPath: string }, void>(
+        const getStartDataRequest = new RequestType<Record<string, unknown>, { addonPath: string }, void>(
             "custom/getStartData"
         );
 
@@ -323,7 +327,6 @@ export class Server {
                 this.globalSettings = this.getGlobalSettings();
                 //invalidate everything
                 currentServer.currentWorkSpace.children.forEach((child) => child.invalidate());
-            } else {
             }
 
             // Revalidate all open text documents
@@ -429,17 +432,14 @@ export class Server {
                         value: `${parameterStr}{**${info.variable.namePattern}**}\n\na variable named \`${info.variable.namePattern}\``,
                     };
                 } else if (info.pattern) {
-                    function convert(toConvert: string): string {
-                        return toConvert.replace(/(\[|\]|\*)/g, "\\$1");
-                    }
                     hoverContent = {
                         kind: MarkupKind.Markdown,
-                        value: `**${convert(info.pattern.skriptPatternString)}**`,
+                        value: `**${escapeMarkdownChars(info.pattern.skriptPatternString)}**`,
                     };
                     if (info.pattern.returnType.possibleTypes.length) {
                         hoverContent.value +=
                             "\n\nreturns: " +
-                            convert(info.pattern.returnType.possibleTypes[0].skriptPatternString);
+                            escapeMarkdownChars(info.pattern.returnType.possibleTypes[0].skriptPatternString);
                     }
                 }
                 if (hoverContent) {

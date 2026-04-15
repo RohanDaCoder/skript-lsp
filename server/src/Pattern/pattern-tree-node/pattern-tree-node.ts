@@ -28,6 +28,4 @@ export class PatternTreeNode {
     // cloning and merging aren't implemented anymore, because when a pattern clones, the efficiency is gone because nodes aren't linked anymore.
     // so all options would be cloned separately.
     // we'll just copy the pattern datas instead when merging the pattern trees.
-
-    constructor() {}
 }
