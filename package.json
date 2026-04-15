@@ -30,8 +30,8 @@
     "scripts": {
         "vscode:prepublish": "bun run build",
         "build": "bun run build:client && bun run build:server",
-        "build:client": "bun build client/src/nodeClientMain.ts --target=node --format=cjs --outfile=client/dist/nodeClientMain.js --external=vscode --external=@vscode/extension-telemetry && bun build client/src/browserClientMain.ts --target=browser --format=iife --outfile=client/dist/browserClientMain.js --external=vscode --external=@vscode/extension-telemetry",
-        "build:server": "bun build server/src/nodeServerMain.ts --target=node --format=cjs --outfile=server/dist/nodeServerMain.js --external=vscode && bun build server/src/browserServerMain.ts --target=browser --format=iife --outfile=server/dist/browserServerMain.js --external=vscode",
+        "build:client": "bun build src/client/nodeClientMain.ts --target=node --format=cjs --outfile=client/dist/nodeClientMain.js --external=vscode --external=@vscode/extension-telemetry && bun build src/client/browserClientMain.ts --target=browser --format=iife --outfile=client/dist/browserClientMain.js --external=vscode --external=@vscode/extension-telemetry",
+        "build:server": "bun build src/server/nodeServerMain.ts --target=node --format=cjs --outfile=server/dist/nodeServerMain.js --external=vscode && bun build src/server/browserServerMain.ts --target=browser --format=iife --outfile=server/dist/browserServerMain.js --external=vscode",
         "build:all": "bun run --parallel build:client build:server",
         "typecheck": "tsc --noEmit",
         "typecheck:client": "tsc --noEmit -p client/tsconfig.json",
