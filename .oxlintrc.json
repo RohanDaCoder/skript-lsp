@@ -75,5 +75,13 @@
     "*.js",
     "addon-parser/**",
     "test-data/**"
+  ],
+  "overrides": [
+    {
+      "files": ["**/__tests__/**/*.ts"],
+      "rules": {
+        "typescript/no-explicit-any": "off"
+      }
+    }
   ]
 }
