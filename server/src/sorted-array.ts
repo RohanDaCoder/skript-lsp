@@ -28,6 +28,9 @@ export function insertSorted<t>(array: Array<t>, value: t, compare: (a: t, b: t)
 }
 
 export function getMaxElement<t>(array: Array<t>, value: t, compare: (a: t, b: t) => boolean): t {
+    if (array.length === 0) {
+        return value;
+    }
     return array.reduce((previousValue, currentValue) =>
         compare(previousValue, currentValue) ? currentValue : previousValue
     );

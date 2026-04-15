@@ -42,13 +42,18 @@
         "lint:fix": "bun x oxlint --fix",
         "fmt": "bun x oxfmt",
         "fmt:check": "bun x oxfmt --check",
-        "chrome": "bun run build && vscode-test-web --browserType=chromium --extensionDevelopmentPath=. ./test-data"
+        "chrome": "bun run build && vscode-test-web --browserType=chromium --extensionDevelopmentPath=. ./test-data",
+        "test": "vitest",
+        "test:run": "vitest run",
+        "test:ui": "vitest --ui",
+        "test:coverage": "vitest run --coverage"
     },
     "devDependencies": {
         "@vscode/test-web": "^0.0.68",
         "oxfmt": "^0.45.0",
         "oxlint": "^1.60.0",
-        "typescript": "^5.8.2"
+        "typescript": "^5.8.2",
+        "vitest": "^4.1.4"
     },
     "contributes": {
         "languages": [
