@@ -34,6 +34,8 @@
         "typecheck:server": "tsc --noEmit -p server/tsconfig.json",
         "watch": "bun run build --watch",
         "package": "bun run build && vsce package",
+        "update-syntax": "bun run scripts/download-syntax.ts",
+        "prebuild": "bun run update-syntax",
         "lint": "bun x oxlint",
         "lint:fix": "bun x oxlint --fix",
         "fmt": "bun x oxfmt",

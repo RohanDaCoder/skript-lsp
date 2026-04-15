@@ -46,6 +46,8 @@ import { WordInfo } from "./skript/validation/word-info";
 import { Deferred, Sleep } from "./Thread";
 import { TokenModifiers } from "./token-modifiers";
 import { TokenTypes } from "./token-types";
+import { loadConfig, resolveConfig, createDefaultConfig, type SkriptConfig } from "./config/skript-config";
+import { loadSyntax, filterSyntax, createCompletionItem, isSyntaxLoaded, getSyntaxCount, searchSyntax } from "./syntax/syntax-provider";
 
 function escapeMarkdownChars(toConvert: string): string {
     return toConvert.replace(/(\[|\]|\*)/g, "\\$1");
@@ -309,6 +311,24 @@ export class Server {
                 await processWorkspaceFolder(f);
             }
 
+            // Load syntax and config
+            const workspacePath = this.currentWorkSpace.children[0]?.uri.fsPath ?? process.cwd();
+            const config = await loadConfig(workspacePath);
+            if (!config) {
+                connection.console.log(
+                    "No .skriptrc.json found. IntelliSkript will load all syntax. " +
+                    "Create a config file to filter by Minecraft version and addons."
+                );
+            }
+            const resolvedConfig = resolveConfig(config);
+            await loadSyntax(resolvedConfig.syntaxPath);
+            if (isSyntaxLoaded()) {
+                const filtered = filterSyntax(resolvedConfig);
+                connection.console.log(`Loaded ${getSyntaxCount()} syntax entries, ${filtered.length} match config`);
+            } else {
+                connection.console.warn("Failed to load syntax file. Completions may be limited.");
+            }
+
             unlockWorkSpace();
         });
 
@@ -492,11 +512,29 @@ export class Server {
             return [];
         });
 
-        connection.onDidChangeWatchedFiles(async (_change) => {
-            // Monitored files have change in VSCode
+        connection.onDidChangeWatchedFiles(async (change) => {
             connection.console.log("We received an file change event");
-            //TODO: update skriptfiles
-            //validateTextDocument(new TextDocument(_change.changes[0].uri));
+
+            const configFiles = [".skriptrc.json", "skript.config.json", ".intelliskript.json"];
+            const hasConfigChange = change.changes.some((c) =>
+                configFiles.some((f) => c.uri.includes(f))
+            );
+
+            if (hasConfigChange) {
+                const workspacePath = this.currentWorkSpace.children[0]?.uri.fsPath ?? process.cwd();
+                const config = await loadConfig(workspacePath);
+                if (!config) {
+                    connection.console.log(
+                        "Config file removed. Loading all syntax."
+                    );
+                }
+                const resolvedConfig = resolveConfig(config);
+                await loadSyntax(resolvedConfig.syntaxPath);
+                if (isSyntaxLoaded()) {
+                    const filtered = filterSyntax(resolvedConfig);
+                    connection.console.log(`Syntax reloaded: ${filtered.length} entries match config`);
+                }
+            }
         });
 
         connection.onDocumentSymbol(async (identifier) => {
@@ -784,6 +822,20 @@ export class Server {
                                 sortNumber++;
                             }
                             break;
+                        }
+                    }
+
+                    // Add syntax-based completions
+                    if (isSyntaxLoaded()) {
+                        const wordToComplete = trimmedContext.currentString.substring(
+                            Math.max(0, trimmedContext.currentString.lastIndexOf(" ") + 1),
+                            editPos - trimmedContext.currentPosition
+                        );
+                        if (wordToComplete.length > 0) {
+                            const syntaxResults = searchSyntax(wordToComplete, 20);
+                            for (const entry of syntaxResults) {
+                                results.push(createCompletionItem(entry));
+                            }
                         }
                     }
                 }
